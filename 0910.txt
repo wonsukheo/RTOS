@@ -1,0 +1,42 @@
+when you use tm4c connect switches, what pin should i use?
+look at tm4c ec board datasheet. check which pins share common with other pins. there are table 2.xx
+
+also check tm4c datasheet table 10-5 gpio pins special 
+
+
+**hard fault: if we dont enable fault itself, if handler is not turned on then hard fault
+
+  double fault: recursive exception
+
+**register 20 base mask register and 19 fault mask register  ... 
+pg81 program status register  OS HAS ONE AND PROCESSOR HAS ONE 
+
+
+**register 14, SP points at MSP on boot up but when ASP bit set to 1, SP points at PSP. so before we set ASP we gotta set PSP to valid addr.
+
+**thumb instruction?? 
+take couple clock, ISB!!
+
+interrupt thread mode 
+
+
+** look at psr register. special register from 17. its flag?. bit 24 thumb bit is what we need to use main_project !!
+
+** control register bit 2 fpca is used for previous terms. just see whats going on 
+  bit0 later in mini project
+ 
+** LDREX
+2.5.2 exception pg 102
+
+** turning on usage fault -> instead of everything else aggregated to hard fault. hatrd fault collects all but we gotta figure out fisrt fault .
+
+**bus too.
+
+MPU memory protection 
+
+
+** DIV0 FAULTSAT, ULINE - 32BIT READ HAPPENS AT WRONG ADDR, NOT SCALE OF 4.
+we are trying to trigger all faults
+
+
+**every memory read is inspected, go thru MPU if they have authority. tm4c very first content of table image.architecture

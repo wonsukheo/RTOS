@@ -1,0 +1,11 @@
+do not use global var
+
+******************************************
+do not turn off interrupt in RTOS
+alternatively, fifo queue
+
+
+lock code snippet, problem is not atomic
+
+Mutex lock/unlock
+binary semaphore same as mutex ? interview***
