@@ -12,7 +12,9 @@ GEN_CMDS__FLAG :=
 ORDERED_OBJS += \
 "./clock.obj" \
 "./commandTerminalInterface.obj" \
+"./gpio.obj" \
 "./rtos.obj" \
+"./rtos_start.obj" \
 "./shell.obj" \
 "./tm4c123gh6pm_startup_ccs.obj" \
 "./uart0.obj" \
@@ -146,8 +148,9 @@ rtos.out: $(OBJS) $(CMD_SRCS) $(GEN_CMDS)
 # Other Targets
 clean:
 	-$(RM) $(EXE_OUTPUTS__QUOTED)
-	-$(RM) "clock.obj" "commandTerminalInterface.obj" "rtos.obj" "shell.obj" "tm4c123gh6pm_startup_ccs.obj" "uart0.obj" 
-	-$(RM) "clock.d" "commandTerminalInterface.d" "rtos.d" "shell.d" "tm4c123gh6pm_startup_ccs.d" "uart0.d" 
+	-$(RM) "clock.obj" "commandTerminalInterface.obj" "gpio.obj" "rtos.obj" "rtos_start.obj" "shell.obj" "tm4c123gh6pm_startup_ccs.obj" "uart0.obj" 
+	-$(RM) "clock.d" "commandTerminalInterface.d" "gpio.d" "rtos.d" "shell.d" "tm4c123gh6pm_startup_ccs.d" "uart0.d" 
+	-$(RM) "rtos_start.d" 
 	-@echo 'Finished clean'
 	-@echo ' '
 

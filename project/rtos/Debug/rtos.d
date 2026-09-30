@@ -13,11 +13,13 @@ rtos.obj: C:/ti/ccs1281/ccs/tools/compiler/ti-cgt-arm_20.2.7.LTS/include/machine
 rtos.obj: C:/ti/ccs1281/ccs/tools/compiler/ti-cgt-arm_20.2.7.LTS/include/sys/_stdint.h
 rtos.obj: C:/ti/ccs1281/ccs/tools/compiler/ti-cgt-arm_20.2.7.LTS/include/stdbool.h
 rtos.obj: ../tm4c123gh6pm.h
+rtos.obj: ../clock.h
 rtos.obj: ../rtos.h
+rtos.obj: ../rtos_start.h
 rtos.obj: ../shell.h
 rtos.obj: ../commandTerminalInterface.h
 rtos.obj: ../uart0.h
-rtos.obj: ../clock.h
+rtos.obj: ../gpio.h
 
 ../rtos.c:
 
@@ -45,7 +47,11 @@ C:/ti/ccs1281/ccs/tools/compiler/ti-cgt-arm_20.2.7.LTS/include/stdbool.h:
 
 ../tm4c123gh6pm.h:
 
+../clock.h:
+
 ../rtos.h:
+
+../rtos_start.h:
 
 ../shell.h:
 
@@ -53,5 +59,5 @@ C:/ti/ccs1281/ccs/tools/compiler/ti-cgt-arm_20.2.7.LTS/include/stdbool.h:
 
 ../uart0.h:
 
-../clock.h:
+../gpio.h:
 

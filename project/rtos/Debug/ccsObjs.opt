@@ -1,6 +1,8 @@
 "./clock.obj"
 "./commandTerminalInterface.obj"
+"./gpio.obj"
 "./rtos.obj"
+"./rtos_start.obj"
 "./shell.obj"
 "./tm4c123gh6pm_startup_ccs.obj"
 "./uart0.obj"

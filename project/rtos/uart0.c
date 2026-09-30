@@ -174,3 +174,22 @@ void putUintUart0(uint32_t val)
 
 }
 
+void printHex32bit(uint32_t val)
+{
+    const char hex_chars[] = "0123456789ABCDEF";
+    char str[11];
+    str[0] = '0';
+    str[1] = 'x';
+
+    int i;
+    for (i = 7; i >= 0; i--) {
+        uint8_t highfourbit = (val >> (i * 4) & 0x0F);
+        char c = hex_chars[highfourbit];
+        str[2 + (7 - i)] = c;
+    }
+    str[10] = '\0';
+
+    putsUart0(str);
+
+    return;
+}

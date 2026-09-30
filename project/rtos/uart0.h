@@ -12,5 +12,6 @@ void getsUart0(char* str);
 void putcUart0(char c);
 void putsUart0(const char* str);
 void putUintUart0(uint32_t val);
+void printHex32bit(uint32_t val);
 
-#endif 
+ #endif

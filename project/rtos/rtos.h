@@ -10,5 +10,22 @@
 
 void initGPIOPFLED(void);
 void yield(void);
+void printStackDump(uint32_t* pStack);
+uint32_t getInstructionSize(uint32_t PCreg);
+void initHandler(void);
+void gpioStart(void);
+
+void triggerBusFault(void);
+void triggerUsageFault(void);
+void triggerMPUInstFault(void);
+void triggerMPUDataFault(void);
+void triggerPendSV(void);
+void triggerHardFault(void);
+
+void HardFault_Handler(void);
+void PendSV_Handler(void);
+void BusFault_Handler(void);
+void UsageFault_Handler(void);
+void MPU_Handler(void);
 
 #endif

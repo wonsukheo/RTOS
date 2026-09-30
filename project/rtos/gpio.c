@@ -1,7 +1,6 @@
 #include "gpio.h"
-
-
-static uint8_t prev_pb = 0x7F;
+#include "clock.h"
+#include "tm4c123gh6pm.h"
 
 /* port B[0:6] <- x7 pb
    port D[0:3] -> x4 LED
@@ -15,6 +14,10 @@ void initGPIO(void)
     GPIO_PORTB_DEN_R |= PB_MASK;
     GPIO_PORTB_DIR_R &= ~PB_MASK;
     GPIO_PORTB_PUR_R |= PB_MASK;
+    GPIO_PORTB_IS_R  &= ~0x7F;  // Edge sensitive (not level)
+    GPIO_PORTB_IBE_R &= ~0x7F;  // Controlled by IEV (single edge, not both)
+    GPIO_PORTB_IEV_R &= ~0x7F;  // Falling edge (active-low press)
+    GPIO_PORTB_ICR_R  =  0x7F;  // Clear any stale edge flags
 
     GPIO_PORTD_DEN_R |= PD_MASK;
     GPIO_PORTD_DIR_R |= PD_MASK;
@@ -31,15 +34,13 @@ void initGPIO(void)
 
 uint8_t getPressedButton(void)
 {
-    uint8_t current_pb = GPIO_PORTB_DATA_R & 0x7F;
+    uint8_t pressed = GPIO_PORTB_RIS_R & 0x7F;
 
-    uint8_t pressed = prev_pb & (~current_pb);
-    
-    prev_pb = current_pb;
-
-    // 20ms debounce
     if (pressed) {
-        waitMicrosecond(20000);	
+        // clear
+        GPIO_PORTB_ICR_R = pressed;
+        // 20ms debounce
+        _delay_cycles(800000);
     }
 
     return pressed;

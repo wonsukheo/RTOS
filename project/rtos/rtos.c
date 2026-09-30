@@ -10,16 +10,7 @@
 #include "gpio.h"
 #include "commandTerminalInterface.h"
 
-
 // System Control Block(SCB) Registers
-#define NVIC_INT_CTRL_R  *((volatile uint32_t*)0xE000ED04)
-#define NVIC_CFG_CTRL_R *((volatile uint32_t*)0xE000ED14)
-#define NVIC_SYS_HND_CTRL_R *((volatile uint32_t*)0xE000ED24)
-#define NVIC_FAULT_STAT_R *((volatile uint32_t*)0xE000ED28)
-#define NVIC_HFAULT_STAT_R *((volatile uint32_t*)0xE000ED2C)
-#define NVIC_MM_ADDR_R *((volatile uint32_t*)0xE000ED34)
-#define NVIC_FAULT_ADDR_R *((volatile uint32_t*)0xE000ED38)
-
 #define PID 1
 #define STACK_TOP 0X20008000
 
@@ -34,41 +25,8 @@ int main(void)
     initGPIO();		// PortB- PushButton, PortD- LED, PortF- on board LED
     initUart0();
     initHandler();
+    launchThread(STACK_TOP, gpioStart);
 
-    setPsp((uint32_t*)STACK_TOP);
-    setAsp();
-
-    putsUart0("RTOS memory && Fault Test Ready\r\n");
-    
-    while (true) {			// gpio-pb-exception polling
-        uint8_t button = getPressedButton();
- 
-        if (button) {
-            if (button & (1 << 0)) {	// PB0: Bus fault
-                triggerBusFault();
-            }
-            if (button & (1 << 1)) {	// PB1: Usage fault
-                triggerUsageFault();
-            } 
-            if (button & (1 << 2)) {	// PB2: PendSV
-                triggerPendSV();
-            }
-            if (button & (1 << 3)) {	// PB3: MPU Data fault
-                triggerMPUDataFault();	
-            }
-            if (button & (1 << 4)) {
-                triggerMPUInstFault();	// PB4: MPU Instruction fault
-            }
-            if (button & (1 << 5)) {
-                triggerHardFault();	// PB5: Hard Fault
-            }
-            if (button & (1 << 6)) {
-               				// tbd
-            }
-        }
-
-    }
-     
     shell();
 
     putsUart0("out of shell process\r\n");
@@ -77,7 +35,39 @@ int main(void)
     return 0;
 }
 
+void gpioStart(void)
+{
+    putsUart0("RTOS memory && Fault Test Ready\r\n");
 
+    while (true) {          // gpio-pb-exception polling
+        uint8_t button = getPressedButton();
+
+        if (button) {
+            if (button & (1 << 0)) {    // PB0: Bus fault
+                triggerBusFault();
+            }
+            if (button & (1 << 1)) {    // PB1: Usage fault
+                triggerUsageFault();
+            } 
+            if (button & (1 << 2)) {    // PB2: PendSV
+                triggerPendSV();
+            }
+            if (button & (1 << 3)) {    // PB3: MPU Data fault
+                triggerMPUDataFault();
+            }
+            if (button & (1 << 4)) {
+                triggerMPUInstFault();  // PB4: MPU Instruction fault
+            }
+            if (button & (1 << 5)) {
+                triggerHardFault(); // PB5: Hard Fault
+            }
+            if (button & (1 << 6)) {
+                // tbd
+            }
+        }
+    }
+        return;
+}
 
 void yield(void)
 {
@@ -112,7 +102,7 @@ uint32_t getInstructionSize(uint32_t PCreg)
 {
     // Thumb opcode(bit0) mask with 0, so access 2byte only
 
-    uint16_t opcode = *((uint16_t*)(PCreg & ~1))
+    uint16_t opcode = *((uint16_t*)(PCreg & ~1));
     
     uint16_t upper5 = (opcode >> 11) & 0x1F;
     
