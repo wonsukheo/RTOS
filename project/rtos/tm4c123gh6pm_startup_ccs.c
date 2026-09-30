@@ -42,6 +42,11 @@ static void IntDefaultHandler(void);
 //*****************************************************************************
 extern void _c_int00(void);
 extern void Uart0_Interrupt_Handler(void);
+extern void BusFault_Handler(void);
+extern void UsageFault_Handler(void);
+extern void MPU_Handler(void);
+extern void HardFault_Handler(void);
+extern void PendSV_Handler(void);
 
 //*****************************************************************************
 //
@@ -71,10 +76,10 @@ void (* const g_pfnVectors[])(void) =
                                             // The initial stack pointer
     ResetISR,                               // The reset handler
     NmiSR,                                  // The NMI handler
-    FaultISR,                               // The hard fault handler
-    IntDefaultHandler,                      // The MPU fault handler
-    IntDefaultHandler,                      // The bus fault handler
-    IntDefaultHandler,                      // The usage fault handler
+    HardFault_Handler,                               // The hard fault handler
+    MPU_Handler,                      // The MPU fault handler
+    BusFault_Handler,                      // The bus fault handler
+    UsageFault_Handler,                      // The usage fault handler
     0,                                      // Reserved
     0,                                      // Reserved
     0,                                      // Reserved
@@ -82,7 +87,7 @@ void (* const g_pfnVectors[])(void) =
     IntDefaultHandler,                      // SVCall handler
     IntDefaultHandler,                      // Debug monitor handler
     0,                                      // Reserved
-    IntDefaultHandler,                      // The PendSV handler
+    PendSV_Handler,                      // The PendSV handler
     IntDefaultHandler,                      // The SysTick handler
     IntDefaultHandler,                      // GPIO Port A
     IntDefaultHandler,                      // GPIO Port B

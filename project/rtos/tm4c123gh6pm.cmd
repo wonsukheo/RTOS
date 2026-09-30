@@ -11,7 +11,12 @@
 MEMORY
 {
     FLASH (RX) : origin = 0x00000000, length = 0x00040000
-    SRAM (RWX) : origin = 0x20000000, length = 0x00008000
+ 
+    MSP_SRAM (RW) : origin = 0x20000000, length = 0x00000200    /* 512 B*/
+    DATA_SRAM (RW) : origin = 0x20000200, length = 0x0000E00    /* 3.5 KB*/
+    HEAP_SRAM (RW) : origin = 0x20001000, length = 0x00007000	/* 28 KB */
+
+    /*SRAM (RWX) : origin = 0x20000000, length = 0x00008000*/
 }
 
 /* The following command line options are set as part of the CCS project.    */
@@ -35,11 +40,11 @@ SECTIONS
     .pinit  :   > FLASH
     .init_array : > FLASH
 
-    .vtable :   > 0x20000000
-    .data   :   > SRAM
-    .bss    :   > SRAM
-    .sysmem :   > SRAM
-    .stack  :   > SRAM
+    /*.vtable :   > 0x20000000*/
+    .data   :   > DATA_SRAM
+    .bss    :   > DATA_SRAM
+    .sysmem :   > HEAP_SRAM
+    .stack  :   > MSP_SRAM
 }
 
 __STACK_TOP = __stack + 512;
