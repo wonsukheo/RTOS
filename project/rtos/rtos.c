@@ -5,7 +5,7 @@
 #include "shell.h"
 #include "uart0.h"
 #include "clock.h"
-
+#include "commandTerminalInterface.h"
 #define PF3_MASK 0X00000008 // GREEN_LED
 #define PF2_MASK 0X00000004 // BLUE_LED
 #define PF1_MASK 0X00000002 // RED_LED

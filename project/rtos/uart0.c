@@ -74,7 +74,7 @@ void Uart0_Interrupt_Handler(void)
         }
     }
 
-    BLUE_LED_BBADDR = 0;
+    //BLUE_LED_BBADDR = 0;
 }
 
 bool kbhit(void)
@@ -116,16 +116,20 @@ void getsUart0(char* str)
 
             putcUart0('\r');		 // echo
             putcUart0('\n');
+
+            BLUE_LED_BBADDR = 0;    // DEBUG
+            RED_LED_BBADDR = 0;
+
             break;			 // end of input, return to shell
         }
         else if (c >= 32) {
             if (count < BUFFER_SIZE) {
+                putcUart0(c);        // echo
+
                 if (c >= 65 && c <= 90) {
                     c |= 32;
                 }
-
                 str[count++] = c;
-                putcUart0(c);		 // echo
             }
         }
     }

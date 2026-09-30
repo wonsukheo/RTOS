@@ -87,7 +87,7 @@ bool isCommand(USER_DATA* data, const char* strCommand, uint8_t minArguments)
     char* str = getFieldString(data, 0);
 
     if (myStrCmp(str, strCommand)) {
-        if ((data->fieldCount - 1) > minArguments) return 1;
+        if ((data->fieldCount - 1) >= minArguments) return 1;
     }
 
     return 0;
@@ -99,6 +99,8 @@ void parseFields(USER_DATA* data)
 {
     uint32_t i;
     uint8_t prevField = 'd';
+    //data->fieldCount = 0;
+
     char readChar;
 
     for (i = 0; i < MAX_CHARS; i++) {

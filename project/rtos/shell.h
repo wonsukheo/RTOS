@@ -3,7 +3,7 @@
 
 #include <stdbool.h>
 #include <stdint.h>
-
+#include "commandTerminalInterface.h"
 void shell(void);
 bool isBackground(USER_DATA* data);
 

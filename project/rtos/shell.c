@@ -5,10 +5,15 @@
 
 void shell(void)
 {
-    USER_DATA data;
-    putsUart0("a. available program with command is limited to \"shell\" for now\r\n");
+    putsUart0("a. \"proc_name &\" is limited to \"shell\"\r\n> ");
+    putsUart0("b. \"proc_name &\" RED LED turned ON\r\n> ");
+    putsUart0("                   OFF upon next enter or return keystroke\r\n> ");
+    putsUart0("c. BLUE LED turned ON upon Uart0 interrupt handler\r\n");
+    putsUart0("                   OFF upon enter or return keystroke\r\n");
 
     while (true) {
+        USER_DATA data = {0};
+
         putsUart0("\r\n> ");	// pc terminal
         getsUart0(data.buffer);
         parseFields(&data);
@@ -53,7 +58,7 @@ void shell(void)
                 putsUart0("Program launched in background\r\n");
             } else {
                 putsUart0("Unknown Program\r\n");
-            }      
+            }
         } 
         else {
             putsUart0("Undefined Command\r\n");
